@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>QuakeTrack</title>
+        <meta name="description" content="Zoek aardbevingen op basis van locatie, datum en magnitude">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="index, nofollow">
+        <script src="lib/jquery-3.3.1.min.js"></script>
+        <!--Leaflet-->
+        <link rel="stylesheet" href="lib/leaflet/leaflet.css">
+        <script src="lib/leaflet/leaflet.js"></script>
+        <!--Jquery UI-->
+        <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+        <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <!--Splide-->
+        <link rel="stylesheet" href="lib/splide-2.4.21/dist/css/splide-core.min.css">
+        <script src="lib/splide-2.4.21/dist/js/splide.min.js"></script>
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/e884db4f65.js" crossorigin="anonymous"></script>
+        <!--Local-->
+        <link rel="stylesheet" href="css/stylesheet.css">
+        <link rel="stylesheet" href="css/style_menu.css">
+        <link rel="stylesheet" href="css/style_scroll.css">
+        <script src="js/script_global.js" defer></script>
+        <script src="js/script.js" defer></script>
+        <script src="js/script_menu.js" defer></script>
+        <script src="js/script_ajax.js" defer></script>
+        <script src="js/launch.js" defer></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="mapWrap">
+                <div id="map"></div>
+            </div>
+            <div id="filtersWrap">
+                <div id="filtersSlider">
+                    <i class="fas fa-chevron-up"></i>
+                </div>
+                <div id="filters">
+                    <h3>Filters</h3>
+                    <div>
+                        <form id="magnitude">
+                            <div class="formtop">
+                                <h3>Magnitude</h3>
+                                <div class="switch">
+                                    <div></div>
+                                </div>
+                            </div>
+                            <label for="magnitudeMin">Min</label>
+                            <input type="number" name="magnitudeMin" id="magnitudeMin" value="3" min="1" max="10">
+                            <div id="magnitudeSlider" class="slider"></div>
+                            <label for="magnitudeMax">Max</label>
+                            <input type="number" name="magnitudeMax" id="magnitudeMax" value="7" min="1" max="10">
+                        </form>
+                        <form id="location">
+                            <div class="formtop">
+                                <h3>Locatie</h3>
+                                <div class="switch">
+                                    <div></div>
+                                </div>
+                            </div>
+                            <label for="locationSearch">Plek</label>
+                            <input type="text" name="locationSearch" id="locationSearch">
+                            <button id="locationSend">Zoek Locatie</button>
+                            <ul></ul>
+                            <label for="range">Radius</label>
+                            <div id="locationSlider" class="slider"></div>
+                            <label for="locationRange">Kilometer</label>
+                            <input type="number" id="locationRange" name="locationRange" value="500"> 
+                        </form>
+                        <form id="date">
+                            <div class="formtop">
+                                <h3>Datum</h3>
+                                <div class="switch">
+                                    <div></div>
+                                </div>
+                            </div>
+                            <label for="dateMin">Van</label>
+                            <input type="text" name="dateMin" id="dateMin">
+                            <label for="dateMax">Tot</label>
+                            <input type="text" name="dateMax" id="dateMax">
+                        </form>
+                        <form id="result">
+                            <h3>Resultaten</h3>
+                            <div id="resultSlider" class="slider"></div>
+                            <label for="resultControl">Aantal</label>
+                            <input type="number" name="resultControl" id="resultControl" value="120" min="1" max="500">
+                        </form>
+                        <button id="send">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <div id="resultsWrap">
+                <div id="options">
+                    <ul>
+                        <li id="openMenu" title="Menu"><i class="fas fa-ellipsis-h"></i></li>
+                        <li id="resultsButton" title="Resultaten"><i class="fas fa-caret-left"></i></li>
+                    </ul>
+                </div>
+                <div id="results">
+                    <form>
+                        <input type="text" name="searchResults" id="searchResults">
+                    </form>
+                    <ul></ul>
+                </div>
+            </div>
+            <div id="menuWrap">
+                <div id="menu">
+                    <div id="closeMenu"><i class="fas fa-times"></i></div>
+                    <div id="columns">
+                        <div>
+                            <figure id="goPopup">
+                                <img src="img/settings.png">
+                                <figcaption>Instellingen</figcaption>
+                            </figure>
+                        </div>
+                        <div>
+                            <figure id="explainFunctions">
+                                <img src="img/question_mark.png">
+                                <figcaption>Help</figcaption>
+                            </figure>
+                        </div>
+                        <div id="splideWrap">
+                            <div class="goback">
+                                <i class="fas fa-angle-left"></i>
+                            </div>
+                            <div class="splide">
+                                <div class="splide__track">
+                                    <ul class="splide__list">
+                                        <li class="splide__slide">
+                                            <div></div>
+                                            <p>Filter de resultaten uit voor een specifieker resultaat.<br>
+                                            Klik op de Slider onderaan de pagina om de filteropties te vinden</p>
+                                        </li>
+                                        <li class="splide__slide">
+                                            <div></div>
+                                            <p>Sommige filtergroepen zijn optioneel.<br> 
+                                            Indien deze niet van toepassing zijn kunnen deze uitgezet worden</p>
+                                        </li>
+                                        <li class="splide__slide">
+                                            <div></div>
+                                            <p>Door op het pijltje naast het menu-icoon te drukken geef je deer resultaten weer.<br>
+                                            De resultaten zijn nog specifieker uit te filteren met de zoekbalk<br>
+                                            Klik op het eerste knopje om een locatie op te zoeken in de map,<br>
+                                            of verwijder onnodige data met het tweede icoontje onder de gegevens</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="popupWrap">
+                <div id="popup">
+                    <div id="popupClose">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div id="popupContent">
+                        <h2>Welkom</h2>
+                        <p>Zoek aardbevingen op basis van locatie, datum en magnitude.</p>
+                        <p>Er zijn verschillende filteropties beschikbaar.<br>
+                        Ook zijn alle gevonden resultaten op een rijtje gezet.<br>
+                        Hier kan je makkelijk doorheen scrollen en navigeren</p>
+                        <p>Meer hulp vind je <span id="goToHelp">hier</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
