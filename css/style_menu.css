@@ -1,0 +1,114 @@
+figure {
+    perspective: 150px;
+}
+figcaption {
+    text-align: center;
+    color: white;
+}
+#menuWrap {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background-color: #01112694;
+    z-index: 1800;
+    display: block;
+}
+#menu {
+    filter: none;
+    width: 70%;
+    height: 100vh;
+    margin: auto;
+}
+#menu i {
+    font-size: 1.6em;
+}
+#menu img {
+    width: 150px;
+    height: 150px;
+}
+#menu ul li i {
+    display: block;
+    font-size: 1.3em;
+}
+#closeMenu {
+    text-align: right;
+    width: 100%;
+    height: 5vh;
+}
+#columns {
+    height: 80vh;
+    margin: auto 0;
+    display: flex;
+    justify-content: center;
+}
+#explainFunctions img {
+    animation: moveHelp 5s forwards;
+}
+#goPopup img {
+    animation: moveSettings 5s forwards;
+}
+#splideWrap {
+    height: 400px;
+    width: 700px;
+    display: none;
+}
+.splide{
+    height: 400px;
+    width: 700px;
+}
+.splide__slide {
+    height: 400px;
+    width: 700px;
+    background-size: cover;
+    background-position: center;
+}
+.splide__slide div {
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+.splide__slide:first-child div {
+    background-image: url('../img/slideshow_filters.PNG');
+}
+.splide__slide:nth-child(2) div {
+    background-image: url('../img/slideshow_button.PNG');
+    background-position: 0, 0;
+}
+.splide__slide:nth-child(3) div {
+    background-image: url('../img/slideshow_results.PNG');
+    background-position: top;
+}
+
+@media only screen and (max-width: 800px){
+    .splide{
+        width: 300px;
+    }
+    .splide__slide {
+        width: 300px;
+    }
+    .splide__slide div {
+        height: 200px;
+    }
+    #menu img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@keyframes moveHelp {
+    0% {
+        transform: rotateY(0deg)
+    }
+    100% {
+        transform: rotateY(-25deg)
+    }
+}
+@keyframes moveSettings {
+    0% {
+        transform: rotateY(0deg)
+    }
+    100% {
+        transform: rotateY(25deg)
+    }
+}
